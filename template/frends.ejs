@@ -1,0 +1,101 @@
+<html>
+<head>
+    <style type="text/css">
+
+        #js_auth {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #999999;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -moz-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.25);
+            -webkit-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.25);
+            box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.25);
+            background-color: #EDF0F5;
+
+        }
+
+        #js_auth_name {
+            font-size: 14px;
+            color: #45688E;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #js_auth_ava_div {
+            /* top: 50%; */
+            height: 60%;
+            width: 60%;
+            margin-top: 10px;
+            margin-left: 40px;
+            border: 1px solid #ccc;
+        }
+
+        img {
+            width: auto;
+            height: 100%;
+            border: 0;
+        }
+
+        a {
+            text-decoration: blink;
+        }
+
+        #galeria {
+            /*display: inline-flex;*/
+        }
+
+        #block {
+            display: inline-flex;
+            Flex-direction: column;
+        }
+
+        #mine {
+            display: inline-flex;
+            background: #507299;
+            /* background-position: left bottom; */
+            /* background-repeat: repeat-x; */
+            height: 40px;
+            width: 100%;
+            vertical-align: text-top;
+            font-size: 12pt;
+            color: #fff;
+            margin-bottom: 6px;
+
+        }
+
+        body {
+            background: #edeef0;
+        }
+    </style>
+</head>
+<body>
+<div id="mine">
+    <span style="margin-top: 0.5%; margin-left: 6px;">Ваш ID: </span>
+    <span style="margin-left: 4px;background: #fff;color: #7293b6;display: table;opacity: 1;padding: 0 6px;margin-top: 0.5%;border-radius: 8px;"><%= user_id %></span>
+    <a href="/logout" style="position: relative;color: rgb(255, 255, 255);left: 88%; margin-top: 0.5%;">ВЫХОД</a>
+</div>
+
+
+<div id="galeria">
+    <% for(var i=0; i < response.length ; i++) {%>
+    <div id="block">
+        <% let user= response[i]; %>
+
+        <div id="js_auth">
+            <div id="js_auth_ava_div">
+                <img id="js_auth_ava" src="<%=user.photo_100%>">
+            </div>
+            <div id="js_auth_info">
+                <a href="http://vk.com/<%= user.domain %>" target="_blank">
+                    <div id="js_auth_name"><%= user.first_name +" "+ user.last_name %></div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+</body>
+</html>

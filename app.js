@@ -1,6 +1,7 @@
 /**
  * Created by Aleksandr on 20.02.2017.
  */
+var cool = require('cool-ascii-faces');
 var config = require("./config");
 var http = require('http');
 var express = require('express');
@@ -10,7 +11,7 @@ var vk = new (require("./vk"))();
 
 
 var app = express();
-app.listen(5000, "localhost");
+
 
 
 app.set('views', __dirname + "/template");
@@ -64,6 +65,9 @@ app.get('/frends', function (req, res, next) {
 
 });
 
+app.get('/cool', function (request, response, next) {
+    response.send(cool());
+});
 
 app.use(function (err, req, res, next) {
     if (err) {
@@ -71,4 +75,8 @@ app.use(function (err, req, res, next) {
         res.status(500).send('Something broke!');
         res.end();
     }
+});
+
+app.listen(5000, function () {
+    console.log('Node app is running on port', app.get('port'));
 });

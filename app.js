@@ -10,7 +10,7 @@ var vk = new (require("./vk"))();
 
 
 var app = express();
-app.listen(8080, "127.0.0.1");
+app.listen(5000, "localhost");
 
 
 app.set('views', __dirname + "/template");

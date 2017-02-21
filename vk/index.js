@@ -4,7 +4,9 @@ let parseJson = bodyParser.json();
 
 function VK(options) {
     this.options = require("./config");
-    options && Object.keys(options).forEach((val) = > this.options[val] = options[val]
+    options && Object.keys(options).forEach(function (val) {
+        return this.options[val] = options[val];
+    }
 )
     ;
     this.token = '';
@@ -30,7 +32,8 @@ VK.prototype._getToken = function (req, res, next) {
             + this.options.client_secret +
             '&redirect_uri=' + req.protocol + '://' + req.hostname + this._redirect_uri + '&code=' + req.query.code;
 
-        https.get(vkAuthenticationUrl, (response) = > parseJson(response, response, function () {
+        https.get(vkAuthenticationUrl, function (response) {
+            parseJson(response, response, function () {
             if (response.body.error) {
                 next(new Error(response.body.status));
                 self.authorized = false;
@@ -45,10 +48,11 @@ VK.prototype._getToken = function (req, res, next) {
             /* res.writeHead(303, {Location:  self._url});
              */
 
+            });
+        }).on('error', function () {
+            next(new Error('404'))
         })
-    ).
-        on('error', () = > next(new Error('404'))
-    )
+    
         ;
 
     }
@@ -85,17 +89,15 @@ VK.prototype.api = function (method, param, callback, next) {
     param.ACCESS_TOKEN = this.token;
     param.V = this.options.ver_api;
 
-    let req = 'https://api.vk.com/method/' + method + '?' + Object.keys(param).reduce((arr, val) = > {
+    let req = 'https://api.vk.com/method/' + method + '?' + Object.keys(param).reduce(function (arr, val) {
             arr.push(val + '=' + encodeURIComponent(param[val]));
-    return arr
+                return arr;
 },
     params
     ).
     join('&');
-    https.get(req, (response) = > {
-        parseJson(response, response,() =
-    >
-    {
+    https.get(req, function (response) {
+        parseJson(response, response, function () {
         let arr = [];
         response.body = response.body || {error: {code: '500', msg: 'error Json Parse'}};
         response.body.rawResponse = response;

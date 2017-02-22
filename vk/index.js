@@ -1,6 +1,6 @@
 var https = require('https');
 var bodyParser = require('body-parser');
-let parseJson = bodyParser.json();
+var parseJson = bodyParser.json();
 
 function VK(options) {
     this.options = require("./config");
@@ -16,7 +16,7 @@ function VK(options) {
 }
 
 VK.prototype._oauth = function (req, res, next) {
-    let vkAuthenticationUrl = 'https://oauth.vk.com/authorize?client_id=' +
+    var vkAuthenticationUrl = 'https://oauth.vk.com/authorize?client_id=' +
         this.options.vkCLientId + '&scope=' + this.options.vkRequestedScopes + '&redirect_uri=' +
         req.protocol + '://' + req.hostname + this._redirect_uri + '&display=page&response_type=code&v=5.62';
     res.redirect(vkAuthenticationUrl);
@@ -26,9 +26,9 @@ VK.prototype._oauth = function (req, res, next) {
 };
 
 VK.prototype._getToken = function (req, res, next) {
-    let self = this;
+    var self = this;
     if (req.query.code) {
-        let vkAuthenticationUrl = 'https://oauth.vk.com/access_token?client_id=' + this.options.vkCLientId + '&client_secret='
+        var vkAuthenticationUrl = 'https://oauth.vk.com/access_token?client_id=' + this.options.vkCLientId + '&client_secret='
             + this.options.client_secret +
             '&redirect_uri=' + req.protocol + '://' + req.hostname + this._redirect_uri + '&code=' + req.query.code;
 
@@ -62,7 +62,7 @@ VK.prototype._getToken = function (req, res, next) {
 };
 
 VK.prototype.authentication = function (options) {
-    let self = this; // сохраняем класс в замыкании
+    var self = this; // сохраняем класс в замыкании
     self._url = options.url || oauthOptions.url;
     self._redirect_uri = options.redirect_uri || oauthOptions.redirect_uri;
 
@@ -84,12 +84,12 @@ VK.prototype.authentication = function (options) {
 };
 
 VK.prototype.api = function (method, param, callback, next) {
-    let params = [];
-    let self = this;
+    var params = [];
+    var self = this;
     param.ACCESS_TOKEN = this.token;
     param.V = this.options.ver_api;
 
-    let req = 'https://api.vk.com/method/' + method + '?' + Object.keys(param).reduce(function (arr, val) {
+    var req = 'https://api.vk.com/method/' + method + '?' + Object.keys(param).reduce(function (arr, val) {
             arr.push(val + '=' + encodeURIComponent(param[val]));
                 return arr;
 },
@@ -98,7 +98,7 @@ VK.prototype.api = function (method, param, callback, next) {
     join('&');
     https.get(req, function (response) {
         parseJson(response, response, function () {
-        let arr = [];
+                var arr = [];
         response.body = response.body || {error: {code: '500', msg: 'error Json Parse'}};
         response.body.rawResponse = response;
         arr.push(response.body, callback);

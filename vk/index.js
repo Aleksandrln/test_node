@@ -67,7 +67,6 @@ VK.prototype.authentication = function (options) {
     self._redirect_uri = options.redirect_uri || oauthOptions.redirect_uri;
 
     return function (req, res, next) {
-        console.log('vk /');
         self.authorized = Boolean(self.token = req.session.token);
         self.user_id = req.session.user_id;
         if (self.authorized) {

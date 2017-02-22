@@ -32,7 +32,6 @@ app.use(vk.authentication({
     }
 ));
 app.get('/', function (req, res, next) {
-    console.log('get /');
     if (vk.authorized) {
         res.redirect('/frends');
 

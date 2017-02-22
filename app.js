@@ -9,7 +9,7 @@ var cookieSession = require("cookie-session");
 
 var vk = new (require("./vk"))();
 
-
+var port = process.env.PORT || 5000;
 var app = express();
 
 
@@ -78,6 +78,6 @@ app.use(function (err, req, res, next) {
     }
 });
 
-app.listen(5000, function () {
-    console.log('Node app is running on port', app.get('port'));
+app.listen(port, function () {
+    console.log('Node app is running on port', port);
 });
